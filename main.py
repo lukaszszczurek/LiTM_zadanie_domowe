@@ -32,27 +32,20 @@ data = response.json()
 bestplayerdata = data[chessTypetext][0]['perfs'][chessTypetext]['rating']
 bestraiting = float(bestplayerdata)
 
-# try:
-#
-#
-# except:
-#     print("Can't find the user")
-#     exit()
 Points = 1700
-if haveLichessAccount == 'y':
-    responsePlayer = requests.get(f"https://lichess.org/api/user/{usernameLichess}")
-    userdata = responsePlayer.json()
-    playerActualraiting = userdata['perfs'][chessTypetext]['rating']
-    playerraitingfloat = float(playerActualraiting)
-    if playerraitingfloat + Points > bestraiting:
-        print(f"Congratulation {name} your chess skills are incredible your lichess "
-              f"rating plus 1700 ({playerraitingfloat} + {Points} > {bestraiting}) points is more than the best chess player in category")
-    else:
-        print("Your score is to weak")
-elif haveLichessAccount=='n':
-    if raitingprediction+Points>bestraiting:
+responsePlayer = requests.get(f"https://lichess.org/api/user/{usernameLichess}")
+userdata = responsePlayer.json()
+playerActualraiting = userdata['perfs'][chessTypetext]['rating']
+playerraitingfloat = float(playerActualraiting)
+if haveLichessAccount == 'y' and not playerraitingfloat + Points < bestraiting:
+
+    print(f"Congratulation {name} your chess skills are incredible your lichess "
+          f"rating plus 1700 ({playerraitingfloat} + {Points} > {bestraiting}) points is more than the best chess player in category")
+elif haveLichessAccount == 'y':
+    print("Ranking is to weak")
+elif haveLichessAccount == 'n':
+    if raitingprediction + Points > bestraiting:
         print(f"Congratulation {name} your chess skills are incredible your lichess "
               "rating plus 1700 points is more than the best chess player in category")
     else:
         print("Your score is to weak")
-
